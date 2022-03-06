@@ -1,0 +1,9 @@
+{
+  "name": "webgo-back",
+  "version": "1.0.0",
+  "description": "Backend of webgo app",
+  "main": "index.js",
+  "repository": "https://github.com/nzavaletac/webgo-back.git",
+  "author": "nzavaletac|BraulioNR|axelDMC",
+  "license": "MIT"
+}
