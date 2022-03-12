@@ -2,8 +2,20 @@
   "name": "webgo-back",
   "version": "1.0.0",
   "description": "Backend of webgo app",
-  "main": "index.js",
+  "main": "src/server.js",
   "repository": "https://github.com/nzavaletac/webgo-back.git",
   "author": "nzavaletac|BraulioNR|axelDMC",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.3",
+    "mongoose": "^6.2.4"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
 }
