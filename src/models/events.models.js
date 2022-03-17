@@ -1,9 +1,7 @@
 const { Schema, model } = require("mongoose")
 const bcrypt = require("bcrypt")
 
-const letterRegexp = /^[A-Za-z ]+$/
-const titleRegexp =
-  /^(?!.*\s)(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[~`!@#$%^&*()--+={}\[\]|\\:;"'<>,.?/_₹]).{3,25}$/
+const letterRegexp = /^[A-Za-z0-9\s]+$/
 const eventSchema = new Schema(
   {
     title: {
@@ -11,14 +9,14 @@ const eventSchema = new Schema(
       required: [true, "The title is required"],
       trim: true,
       minlength: 3,
-      maxlength: 25,
-      match: titleRegexp,
+      maxlength: 150,
+      match: letterRegexp,
     },
     location: {
       type: String,
       required: [true, "The location is required"],
       minlength: 3,
-      maxlength: 25,
+      maxlength: 150,
       match: letterRegexp,
     },
     image: {
@@ -32,7 +30,7 @@ const eventSchema = new Schema(
     description: {
       type: String,
       required: [true, "The description is required"],
-      maxlength: 50,
+      maxlength: 150,
       trim: true,
     },
     publicity: {

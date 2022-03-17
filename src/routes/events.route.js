@@ -7,6 +7,6 @@ const {
   destroy,
 } = require("../controllers/events.controller")
 router.route("/").get(list).post(create)
-router.report("/:eventId").get(show).delete(destroy).put(update)
+router.route("/:eventId").get(show).delete(destroy).put(update)
 
 module.exports = router

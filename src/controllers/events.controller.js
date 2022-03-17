@@ -3,14 +3,16 @@ const User = require("../models/users.model")
 
 exports.create = async (req, res) => {
   try {
-    const { body, userId } = req
+    const {
+      body: { userId, ...rest },
+    } = req
 
     const user = await User.findById(userId)
     if (!user) {
       throw new Error("User invalid")
     }
 
-    const event = await Event.create({ ...body, creator: userId })
+    const event = await Event.create({ ...rest, creator: userId })
     user.events.push(event._id)
     await user.save({ validateBeforeSave: false })
 
@@ -33,11 +35,10 @@ exports.list = async (req, res) => {
 exports.show = async (req, res) => {
   const { eventId } = req.params
   try {
-    const event = await Event.findById({ _id: eventId }).populate({
-      path: "creator",
-      select: "email",
-      populate: "events",
-    })
+    const event = await Event.findById({ _id: eventId }).populate(
+      "creator",
+      "name lastName"
+    )
 
     if (!event) {
       throw new error("Upss..something was bad")
@@ -50,14 +51,13 @@ exports.show = async (req, res) => {
 
 exports.update = async (req, res) => {
   const {
-    body,
+    body: { userId, ...rest },
     params: { eventId },
-    userId,
   } = req
   try {
     const event = await Event.findOneAndUpdate(
       { _id: eventId, creator: userId },
-      body,
+      rest,
       {
         new: true,
       }
@@ -76,7 +76,7 @@ exports.destroy = async (req, res) => {
   try {
     const {
       params: { eventId },
-      userId,
+      body: { userId, ...rest },
     } = req
     const event = await Event.findOneAndDelete({
       _id: eventId,
