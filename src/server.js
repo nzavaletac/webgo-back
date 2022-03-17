@@ -5,6 +5,7 @@ const userRouter = require("./routes/users.route")
 const eventRouter = require("./routes/events.route")
 
 const port = process.env.PORT || 8000
+console.log("variable puerto" + process.env.PORT)
 const app = express()
 
 app.use(express.json())
