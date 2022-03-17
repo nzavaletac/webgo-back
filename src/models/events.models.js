@@ -26,7 +26,7 @@ const eventSchema = new Schema(
       required: [true, "The image is required"],
     },
     date: {
-      type: String,
+      type: Date,
       required: [true, "The date is required"],
     },
     description: {
