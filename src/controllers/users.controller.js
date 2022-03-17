@@ -26,7 +26,7 @@ exports.update = async (req, res) => {
     res.status(200).json({ message: "User updated", user });
   } catch (e) {
     res.status(400).json({
-      message: "Has ocurred an error",
+      message: "An error has occurred",
     });
   }
 };
@@ -38,11 +38,11 @@ exports.destroy = async (req, res) => {
     } = req;
     const user = await User.findOneAndDelete({ _id: userId });
     if (!user) {
-      res.status(403).json({ message: 'User does not delete"' });
+      res.status(403).json({ message: "Unable to delete user" });
       return;
     }
     res.status(200).json({ message: "User deleted", user });
   } catch (e) {
-    res.status(400).json({ message: "Has ocurred an error" });
+    res.status(400).json({ message: "An error has occurred" });
   }
 };

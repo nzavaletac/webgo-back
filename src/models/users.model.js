@@ -10,33 +10,33 @@ const userSchema = new Schema(
   {
     name: {
       type: String,
-      required: true,
+      required: [true, "Name is required"],
       minlength: 3,
       maxlength: 25,
       match: letterRegexp,
     },
     lastName: {
       type: String,
-      required: true,
+      required: [true, "Last Name is required"],
       minlength: 3,
       maxlength: 25,
       match: letterRegexp,
     },
     phoneNumber: {
       type: Number,
-      required: true,
+      required: [true, "Phone number is required"],
       minlength: 9,
       maxlength: 9,
       match: /^[0-9]+$/,
     },
     city: {
       type: String,
-      required: true,
+      required: [true, "City is required"],
       match: /^[a-zA-Z0-9 ]+$/,
     },
     email: {
       type: String,
-      required: true,
+      required: [true, "Email is required"],
       minlength: 10,
       maxlength: 50,
       match: emailRegexp,
@@ -44,9 +44,17 @@ const userSchema = new Schema(
     },
     password: {
       type: String,
-      required: true,
+      required: [true, "Password is required"],
       minlength: 6,
       match: passwordRegexp,
+    },
+    events: {
+      type: [
+        {
+          type: Schema.Types.ObjectId,
+          ref: "Events",
+        },
+      ],
     },
   },
   {
