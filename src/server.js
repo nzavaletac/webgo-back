@@ -10,8 +10,8 @@ app.use(express.json());
 app.use(cors());
 connect();
 
-app.get("/", (res, req) => {
-  res.statusCode(200).json({
+app.get("/", (req, res) => {
+  res.status(200).json({
     message: "It´s working",
   });
 });
