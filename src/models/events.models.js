@@ -1,7 +1,7 @@
 const { Schema, model } = require("mongoose");
 const bcrypt = require("bcrypt");
-
 const letterRegexp = /^[A-Za-z0-9\s]+$/;
+
 const eventSchema = new Schema(
   {
     title: {
@@ -47,7 +47,6 @@ const eventSchema = new Schema(
     timestamps: true,
   }
 );
-
 const Event = model("Event", eventSchema);
-
 module.exports = Event;
+
