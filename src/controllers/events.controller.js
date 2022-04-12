@@ -90,3 +90,12 @@ exports.destroy = async (req, res) => {
     res.status(400).json({ message: "An error has occurred", e })
   }
 }
+
+exports.listAll = async (req, res) => {
+  try {
+    const events = await Event.find().select("title date description")
+    res.status(200).json({ meesage: `${events.length} events found`, events })
+  } catch (e) {
+    res.status(500).json({ message: "Error server: ", e })
+  }
+}
