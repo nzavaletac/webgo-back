@@ -47,7 +47,7 @@ exports.show = async (req, res) => {
     }
     res.status(200).json({ meesage: "Event found", event })
   } catch (e) {
-    res.status(400).json({ message: e.message })
+    res.status(400).json({ error: e.message })
   }
 }
 
@@ -70,7 +70,7 @@ exports.update = async (req, res) => {
     }
     res.status(200).json({ message: "Event updated", event })
   } catch (e) {
-    res.status(400).json({ message: "An error has occurred", e })
+    res.status(400).json({ error: "An error has occurred", e })
   }
 }
 
@@ -89,17 +89,17 @@ exports.destroy = async (req, res) => {
     }
     res.status(200).json({ message: "Event deleted", event })
   } catch (e) {
-    res.status(400).json({ message: "An error has occurred", e })
+    res.status(400).json({ error: "An error has occurred", e })
   }
 }
 
 exports.listAll = async (req, res) => {
   try {
     const events = await Event.find()
-      .select("title date description")
+      .select("title location image date description categories")
       .populate("categories", "title")
     res.status(200).json({ meesage: `${events.length} events found`, events })
   } catch (e) {
-    res.status(500).json({ message: "Error server: ", e })
+    res.status(500).json({ error: "Error server: ", e })
   }
 }
