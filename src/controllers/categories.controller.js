@@ -2,9 +2,9 @@ const Category = require("../models/categories.models")
 
 exports.getCategories = async (req, res) => {
   try {
-    Category.find().then((categories) => {
+    Category.find().then((Categories) => {
       res.json({
-        content: categories,
+        categories: Categories,
       })
     })
   } catch (e) {
