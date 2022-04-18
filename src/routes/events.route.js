@@ -5,8 +5,10 @@ const {
   show,
   update,
   destroy,
+  listAll,
 } = require("../controllers/events.controller")
-router.route("/").get(list).post(create)
+router.route("/").get(listAll).post(create)
 router.route("/:eventId").get(show).delete(destroy).put(update)
+router.route("/mylist").get(list)
 
 module.exports = router
