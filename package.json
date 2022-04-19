@@ -3,6 +3,11 @@
   "version": "1.0.0",
   "description": "Backend of webgo app",
   "main": "src/server.js",
+  "engine":{
+  "node": "16.142",
+  "yarn": "1.22.10",
+  "npm": "8.5.0"
+  },
   "repository": "https://github.com/nzavaletac/webgo-back.git",
   "author": "nzavaletac|BraulioNR|axelDMC",
   "license": "MIT",
