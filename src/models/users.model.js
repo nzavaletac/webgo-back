@@ -1,4 +1,4 @@
-const { Schema, model } = require("mongoose")
+const { Schema, model, models } = require("mongoose")
 const bcrypt = require("bcrypt")
 
 const letterRegexp = /^[A-Za-z ]+$/
@@ -29,18 +29,30 @@ const userSchema = new Schema(
       maxlength: 9,
       match: /^[0-9]+$/,
     },
-    city: {
-      type: String,
-      required: [true, "City is required"],
-      match: /^[a-zA-Z0-9 ]+$/,
+    location: {
+      type: Array,
+      default: [],
+      required: [true, "The location is required"],
     },
     email: {
       type: String,
+      validate: [
+        {
+          async validator(email) {
+            try {
+              const user = await models.User.findOne({ email })
+              return !user
+            } catch (e) {
+              return false
+            }
+          },
+          message: "Mail is already in use",
+        },
+      ],
       required: [true, "Email is required"],
       minlength: 10,
       maxlength: 50,
       match: emailRegexp,
-      unique: true,
     },
     password: {
       type: String,
