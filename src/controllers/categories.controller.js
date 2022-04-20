@@ -1,69 +1,69 @@
-const Categorie = require("../models/categories.models");
+const Category = require("../models/categories.models")
 
 exports.getCategories = async (req, res) => {
   try {
-    Categorie.find().then((categories) => {
+    Category.find().then((Categories) => {
       res.json({
-        content: categories,
-      });
-    });
+        categories: Categories,
+      })
+    })
   } catch (e) {
     res.status(500).json({
       message: "Something went wrong",
-    });
+    })
   }
-};
+}
 
 exports.postCategories = async (req, res) => {
   try {
-    const { body } = req;
-    const categorie = await Categorie.create(body);
-    res.status(201).json({ message: "Categorie created", categorie });
+    const { body } = req
+    const category = await Category.create(body)
+    res.status(201).json({ message: "Category created", category })
   } catch (e) {
-    res.status(400).json({ error: e });
+    res.status(400).json({ error: e })
   }
-};
+}
 
 exports.putCategories = async (req, res) => {
   const {
     body,
-    params: { categorieId },
-  } = req;
+    params: { categoryId },
+  } = req
   try {
-    const categorie = await Categorie.findOneAndUpdate(
-      { _id: categorieId },
+    const category = await Category.findOneAndUpdate(
+      { _id: categoryId },
       body,
       {
         new: true,
       }
-    );
-    if (!categorie) {
-      res.status(403).json({ message: "Categorie does not updated" });
-      return;
+    )
+    if (!category) {
+      res.status(403).json({ message: "Category does not updated" })
+      return
     }
     res.status(201).json({
-      message: "Categorie updated",
-      categorie,
-    });
+      message: "Category updated",
+      category,
+    })
   } catch (e) {
     res.status(400).json({
       message: "An error has ocurred",
-    });
+    })
   }
-};
+}
 
 exports.deleteCategories = async (req, res) => {
   try {
     const {
-      params: { categorieId },
-    } = req;
-    const categorie = await Categorie.findByIdAndDelete({ _id: categorieId });
-    if (!categorie) {
-      res.status(403).json({ message: "Unable to delete categorie" });
-      return;
+      params: { categoryId },
+    } = req
+    const category = await Category.findByIdAndDelete({ _id: categoryId })
+    if (!category) {
+      res.status(403).json({ message: "Unable to delete category" })
+      return
     }
-    res.status(200).json({ message: "Categorie deleted", categorie });
+    res.status(200).json({ message: "Category deleted", category })
   } catch (e) {
-    res.status(400).json({ message: "An error has ocurred" });
+    res.status(400).json({ message: "An error has ocurred" })
   }
-};
+}
