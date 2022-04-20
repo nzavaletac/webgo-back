@@ -17,7 +17,7 @@ app.use(express.json({ limit: "100mb" }))
 app.use(cors())
 app.use(morgan("dev"));
 
-app.get("/", auth, (req, res) => {
+app.get("/", (req, res) => {
   console.log(req.userId);
   res.status(200).json({
     message: "It´s working",
