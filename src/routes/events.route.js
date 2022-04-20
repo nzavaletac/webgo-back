@@ -11,6 +11,6 @@ const { auth } = require("../utils/auth");
 
 router.route("/").get(listAll).post(auth, create);
 router.route("/:eventId").get(show).delete(auth, destroy).put(auth, update);
-router.route("/mylist").get(list);
+router.route("/mylist").get(auth, list);
 
 module.exports = router;
