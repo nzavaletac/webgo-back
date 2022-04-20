@@ -25,7 +25,10 @@ exports.create = async (req, res) => {
 exports.list = async (req, res) => {
   try {
     const { userId } = req.query;
-    const events = await Event.find({ creator: userId }).select("title");
+    const events = await Event.find({ creator: userId }).populate(
+      "categories",
+      "title"
+    );
     res.status(200).json({ meesage: `${events.length} events found`, events });
   } catch (e) {
     res.status(500).json({ message: "Error server: ", e });
@@ -35,17 +38,15 @@ exports.list = async (req, res) => {
 exports.show = async (req, res) => {
   const { eventId } = req.params;
   try {
-    const event = await Event.findById({ _id: eventId }).populate(
-      "creator",
-      "name lastName"
-    );
-
+    const event = await Event.findById({ _id: eventId })
+      .populate("creator", "name lastName")
+      .populate("categories", "title");
     if (!event) {
       throw new error("Upss..something was bad");
     }
     res.status(200).json({ meesage: "Event found", event });
   } catch (e) {
-    res.status(400).json({ message: e.message });
+    res.status(400).json({ error: e.message });
   }
 };
 
@@ -68,7 +69,7 @@ exports.update = async (req, res) => {
     }
     res.status(200).json({ message: "Event updated", event });
   } catch (e) {
-    res.status(400).json({ message: "An error has occurred", e });
+    res.status(400).json({ error: "An error has occurred", e });
   }
 };
 
@@ -87,6 +88,17 @@ exports.destroy = async (req, res) => {
     }
     res.status(200).json({ message: "Event deleted", event });
   } catch (e) {
-    res.status(400).json({ message: "An error has occurred", e });
+    res.status(400).json({ error: "An error has occurred", e });
+  }
+};
+
+exports.listAll = async (req, res) => {
+  try {
+    const events = await Event.find()
+      .select("title location image date description categories")
+      .populate("categories", "title");
+    res.status(200).json({ meesage: `${events.length} events found`, events });
+  } catch (e) {
+    res.status(500).json({ error: "Error server: ", e });
   }
 };

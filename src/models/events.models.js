@@ -1,6 +1,5 @@
-const { Schema, model } = require("mongoose");
-const bcrypt = require("bcrypt");
-const letterRegexp = /^[A-Za-z0-9\s]+$/;
+const { Schema, model } = require("mongoose")
+const letterRegexp = /^[A-Za-z0-9\s]+$/
 
 const eventSchema = new Schema(
   {
@@ -13,11 +12,9 @@ const eventSchema = new Schema(
       match: letterRegexp,
     },
     location: {
-      type: String,
+      type: Array,
+      default: [],
       required: [true, "The location is required"],
-      minlength: 3,
-      maxlength: 150,
-      match: letterRegexp,
     },
     image: {
       type: String,
@@ -42,10 +39,19 @@ const eventSchema = new Schema(
       ref: "User",
       require: [true, "The creator's ID is required"],
     },
+    categories: {
+      type: [
+        {
+          type: Schema.Types.ObjectId,
+          ref: "Category",
+        },
+      ],
+    },
   },
   {
     timestamps: true,
   }
-);
-const Event = model("Event", eventSchema);
-module.exports = Event;
+
+)
+const Event = model("Event", eventSchema)
+module.exports = Event

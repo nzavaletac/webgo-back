@@ -5,10 +5,12 @@ const {
   show,
   update,
   destroy,
+  listAll,
 } = require("../controllers/events.controller");
 const { auth } = require("../utils/auth");
 
-router.route("/").get(list).post(auth, create);
+router.route("/").get(listAll).post(auth, create);
 router.route("/:eventId").get(show).delete(auth, destroy).put(auth, update);
+router.route("/mylist").get(list);
 
 module.exports = router;
