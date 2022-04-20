@@ -1,61 +1,60 @@
-const Event = require("../models/events.models")
-const User = require("../models/users.model")
+const Event = require("../models/events.models");
+const User = require("../models/users.model");
 
 exports.create = async (req, res) => {
   try {
     const {
       body: { userId, ...rest },
-    } = req
+    } = req;
 
-    const user = await User.findById(userId)
+    const user = await User.findById(userId);
     if (!user) {
-      throw new Error("User invalid")
+      throw new Error("User invalid");
     }
 
-    const event = await Event.create({ ...rest, creator: userId })
-    user.events.push(event._id)
-    await user.save({ validateBeforeSave: false })
+    const event = await Event.create({ ...rest, creator: userId });
+    user.events.push(event._id);
+    await user.save({ validateBeforeSave: false });
 
-    res.status(201).json({ message: "Event created", event })
+    res.status(201).json({ message: "Event created", event });
   } catch (e) {
-    res.status(400).json({ error: e })
+    res.status(400).json({ error: e });
   }
-}
+};
 
 exports.list = async (req, res) => {
   try {
-    const { userId } = req.query
+    const { userId } = req.query;
     const events = await Event.find({ creator: userId }).populate(
       "categories",
       "title"
-    )
-    res.status(200).json({ meesage: `${events.length} events found`, events })
+    );
+    res.status(200).json({ meesage: `${events.length} events found`, events });
   } catch (e) {
-    res.status(500).json({ message: "Error server: ", e })
+    res.status(500).json({ message: "Error server: ", e });
   }
-}
+};
 
 exports.show = async (req, res) => {
-  const { eventId } = req.params
+  const { eventId } = req.params;
   try {
     const event = await Event.findById({ _id: eventId })
       .populate("creator", "name lastName")
-      .populate("categories", "title")
-
+      .populate("categories", "title");
     if (!event) {
-      throw new error("Upss..something was bad")
+      throw new error("Upss..something was bad");
     }
-    res.status(200).json({ meesage: "Event found", event })
+    res.status(200).json({ meesage: "Event found", event });
   } catch (e) {
-    res.status(400).json({ error: e.message })
+    res.status(400).json({ error: e.message });
   }
-}
+};
 
 exports.update = async (req, res) => {
   const {
     body: { userId, ...rest },
     params: { eventId },
-  } = req
+  } = req;
   try {
     const event = await Event.findOneAndUpdate(
       { _id: eventId, creator: userId },
@@ -63,43 +62,43 @@ exports.update = async (req, res) => {
       {
         new: true,
       }
-    )
+    );
     if (!event) {
-      res.status(403).json({ message: "Event did not update" })
-      return
+      res.status(403).json({ message: "Event did not update" });
+      return;
     }
-    res.status(200).json({ message: "Event updated", event })
+    res.status(200).json({ message: "Event updated", event });
   } catch (e) {
-    res.status(400).json({ error: "An error has occurred", e })
+    res.status(400).json({ error: "An error has occurred", e });
   }
-}
+};
 
 exports.destroy = async (req, res) => {
   try {
     const {
       params: { eventId },
       body: { userId, ...rest },
-    } = req
+    } = req;
     const event = await Event.findOneAndDelete({
       _id: eventId,
       creator: userId,
-    })
+    });
     if (!event) {
-      res.status(403).json({ message: "Event did not delete" })
+      res.status(403).json({ message: "Event did not delete" });
     }
-    res.status(200).json({ message: "Event deleted", event })
+    res.status(200).json({ message: "Event deleted", event });
   } catch (e) {
-    res.status(400).json({ error: "An error has occurred", e })
+    res.status(400).json({ error: "An error has occurred", e });
   }
-}
+};
 
 exports.listAll = async (req, res) => {
   try {
     const events = await Event.find()
       .select("title location image date description categories")
-      .populate("categories", "title")
-    res.status(200).json({ meesage: `${events.length} events found`, events })
+      .populate("categories", "title");
+    res.status(200).json({ meesage: `${events.length} events found`, events });
   } catch (e) {
-    res.status(500).json({ error: "Error server: ", e })
+    res.status(500).json({ error: "Error server: ", e });
   }
-}
+};

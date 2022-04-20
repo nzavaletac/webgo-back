@@ -1,4 +1,4 @@
-const router = require("express").Router()
+const router = require("express").Router();
 const {
   create,
   list,
@@ -6,9 +6,11 @@ const {
   update,
   destroy,
   listAll,
-} = require("../controllers/events.controller")
-router.route("/").get(listAll).post(create)
-router.route("/:eventId").get(show).delete(destroy).put(update)
-router.route("/mylist").get(list)
+} = require("../controllers/events.controller");
+const { auth } = require("../utils/auth");
 
-module.exports = router
+router.route("/").get(listAll).post(auth, create);
+router.route("/:eventId").get(show).delete(auth, destroy).put(auth, update);
+router.route("/mylist").get(auth, list);
+
+module.exports = router;
