@@ -18,7 +18,6 @@ app.use(cors())
 app.use(morgan("dev"));
 
 app.get("/", (req, res) => {
-  console.log(req.userId);
   res.status(200).json({
     message: "It´s working",
   });
