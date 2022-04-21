@@ -24,7 +24,6 @@ exports.signin = async (req, res) => {
     } = req;
 
     const user = await User.findOne({ email });
-
     if (!user || !password) {
       throw new Error("Invalid email or password");
     }
