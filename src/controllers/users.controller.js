@@ -24,6 +24,8 @@ exports.signin = async (req, res) => {
     } = req;
 
     const user = await User.findOne({ email });
+    const name = user.name;
+    console.log(name);
     if (!user || !password) {
       throw new Error("Invalid email or password");
     }
@@ -36,7 +38,7 @@ exports.signin = async (req, res) => {
     const token = jwt.sign({ id: user._id }, process.env.SECRET, {
       expiresIn: 60 * 60 * 24 * 365,
     });
-    res.status(200).json({ token, user });
+    res.status(200).json({ token, name });
   } catch (e) {
     res.status(401).json({
       message: e.message,
