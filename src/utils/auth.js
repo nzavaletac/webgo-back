@@ -16,6 +16,6 @@ exports.auth = (req, res, next) => {
   }
 
   const { id } = jwt.verify(token, process.env.SECRET);
-  req.userId = id;
+  req.body.userId = id;
   next();
 };
