@@ -1,4 +1,5 @@
-const { Schema, model } = require("mongoose");
+const { Schema, model } = require("mongoose")
+const letterRegexp = /^[A-Za-z0-9\s]+$/
 
 const eventSchema = new Schema(
   {
@@ -8,6 +9,7 @@ const eventSchema = new Schema(
       trim: true,
       minlength: 3,
       maxlength: 150,
+      match: letterRegexp,
     },
     location: {
       type: Array,
@@ -49,6 +51,7 @@ const eventSchema = new Schema(
   {
     timestamps: true,
   }
-);
-const Event = model("Event", eventSchema);
-module.exports = Event;
+
+)
+const Event = model("Event", eventSchema)
+module.exports = Event
